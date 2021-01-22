@@ -1,0 +1,8 @@
+@use './@foundations/base/_reset';
+@use './@foundations/base/_base';
+@use './@foundations/@foundations' as *;
+@import './frame/**';
+@import './libs/**';
+@import './layouts/**';
+@import './objects/**';
+@import './pages/**';

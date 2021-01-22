@@ -1,0 +1,229 @@
+<%- include('./@includes/_header.ejs', {param:'param'}) %>
+<main id="home" class="wrapper mb-40">
+
+  <div class="mt-32">
+    <p class="text-40 font-bold text-center">Anker link</p>
+    <p class="text-30 text-center mt-2">- GSAP ScrollTo plugin -</p>
+    <ol class="mt-8 mx-auto flex-center">
+      <li class="text-white text-24 text-bold py-4 px-8 mr-4 bg-green rounded" data-loadanimation-item><a href="#contents1" data-scroll>Tab</a></li>
+      <li class="text-white text-24 text-bold py-4 px-8 mr-4 bg-green rounded" data-loadanimation-item><a href="#contents2" data-scroll>Accordion</a></li>
+      <li class="text-white text-24 text-bold py-4 px-8 bg-green rounded" data-loadanimation-item><a href="#contents3" data-scroll>Prallax</a></li>
+    </ol>
+  </div>
+
+  <!-- Picture -->
+  <div class="overflow">
+    <div class="relative mt-32">
+      <div style="padding-top: 50%"></div>
+      <%- picture('./assets/img/parallax01', 'jpg', 'image', '', 'sm', false) %>
+    </div>
+  </div>
+  <!-- / Picture -->
+
+  <!-- Modal -->
+  <div class="mt-56">
+    <p class="text-40 font-bold text-center">Modal</p>
+    <p class="text-30 text-center mt-2">- Accessibility Modal -</p>
+    <ol class="flex mt-8">
+      <li class="w-1/2 px-4">
+        <div class="" data-modal>
+          <div class="p-4 border-2 border-solid border-green text-center">
+            <p class="text-28">Normal Modal</p>
+            <p class="text-20 pt-6">this is normal modal</p>
+            <button type="button" class="w-1/2 p-3 mt-8 text-20 text-white font-bold bg-green rounded" data-modal-open>OPEN</button>
+          </div>
+          <div class="fixed top-0 right-0 bottom-0 left-0 bg-opacity-gray text-center z-modal" role="dialog" data-modal-content aria-hidden="true" style="display: none">
+            <div class="position absolute w-1/2 bg-white p-4">
+              <p class="text-30 font-bold" data-modal-label>Opened Modal</p>
+              <p class="text-20 pt-6">this is normal modal</p>
+              <button type="button" class="w-1/2 p-3 mt-8 text-20 text-white font-bold bg-green rounded" aria-label="close" data-modal-close>CLOSE</button>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="w-1/2 px-4">
+        <div class="" data-modal>
+          <div class="p-4 border-2 border-solid border-yellow text-center">
+            <p class="text-28">Youtube Modal</p>
+            <p class="text-20 pt-6">this is YouTube modal</p>
+            <button type="button" class="w-1/2 p-3 mt-8 text-20 font-bold bg-yellow rounded" data-modal-open>OPEN</button>
+          </div>
+          <div class="fixed top-0 right-0 bottom-0 left-0 bg-opacity-gray text-center z-modal" role="dialog" data-modal-content data-modal-youtube aria-hidden="true" style="display: none">
+            <div class="position absolute w-1/2 bg-white p-4">
+              <div class="relative pt-youtube">
+                <span class="hidden" aria-hidden="true" data-modal-label>Youtube Modal</span>
+                <iframe src="https://www.youtube.com/embed/AB-Wp92nQQY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute position w-full h-full"></iframe>
+              </div>
+              <button type="button" class="w-1/2 p-3 mt-8 text-20 font-bold bg-yellow rounded" aria-label="close" data-modal-close>CLOSE</button>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+  <!-- /Modal -->
+
+  <!-- Tab -->
+  <div id="contents1" class="mt-56" data-fade-trigger>
+    <p class="text-40 font-bold text-center">Tab Toggle</p>
+    <p class="text-30 text-center mt-2">- Accessibility Tab -</p>
+    <ol class="flex" role="tablist" data-fade-item>
+      <li class="rounded bg-green" role="tab">
+        <button type="button" id="tabOpen1" class="py-3 px-8 text-30 text-white text-center" aria-controls="tabItem1" aria-selected="true" data-tab>
+          <span class="tab__text">Tab01</span>
+        </button>
+      </li>
+      <li class="rounded bg-yellow" role="tab">
+        <button type="button" id="tabOpen2" class="py-3 px-8 text-30 text-center" aria-controls="tabItem2" aria-selected="false" data-tab>
+          <span class="tab__text">Tab01</span>
+        </button>
+      </li>
+    </ol>
+    <div data-fade-item>
+      <div id="tabItem1" class="p-10 bg-green rounded duration-300" role="tabpanel" aria-labelledby="tabOpen1" aria-hidden="true">
+        <p class="text-40 font-bold text-center text-white">Tab01 contents</p>
+      </div>
+      <div id="tabItem2" class="p-10 bg-yellow rounded duration-300" role="tabpanel" aria-labelledby="tabOpen2" aria-hidden="true">
+        <p class="text-40 font-bold text-center">Tab02 contents</p>
+      </div>
+    </div>
+  </div>
+  <!-- /Tab -->
+
+  <!-- Tab -->
+  <!-- <div id="contents1" class="mt-56" data-fade-trigger>
+    <p class="text-40 font-bold text-center">Tab Toggle</p>
+    <p class="text-30 text-center mt-2">- Accessibility Tab -</p>
+    <ol class="flex" role="tablist" data-fade-item>
+      <li class="rounded bg-green" role="tab">
+        <button type="button" id="tabOpen3" class="py-3 px-8 text-30 text-white text-center" aria-controls="tabItem3" aria-selected="true" data-tab>
+          <span class="tab__text">Tab01</span>
+        </button>
+      </li>
+      <li class="rounded bg-yellow" role="tab">
+        <button type="button" id="tabOpen4" class="py-3 px-8 text-30 text-center" aria-controls="tabItem4" aria-selected="false" data-tab>
+          <span class="tab__text">Tab01</span>
+        </button>
+      </li>
+    </ol>
+    <div data-fade-item>
+      <div id="tabItem3" class="p-10 bg-green rounded duration-300" role="tabpanel" aria-labelledby="tabOpen3" aria-hidden="true">
+        <p class="text-40 font-bold text-center text-white">Tab01 contents</p>
+      </div>
+      <div id="tabItem4" class="p-10 bg-yellow rounded duration-300" role="tabpanel" aria-labelledby="tabOpen4" aria-hidden="true">
+        <p class="text-40 font-bold text-center">Tab02 contents</p>
+      </div>
+    </div>
+  </div> -->
+  <!-- /Tab -->
+
+  <!-- Vanilla Accordion -->
+  <!-- <div class="mt-56" data-multiple-trigger>
+    <p class="text-40 font-bold text-center">Vanilla Accordion</p>
+    <p class="text-30 text-center mt-2">- Accessibility Accordion -</p>
+    <ol class="">
+      <li class="w-full mt-4" data-multiple-item>
+        <div class="bg-green rounded" data-accordion-label>
+          <button type="button" class="text-white text-26 p-3 w-full h-full text-left" aria-expanded="false" data-accordion-btn>Accordion01</button>
+        </div>
+        <div class="bg-light-gray" aria-hidden="true" data-accordion-content>
+          <div class="p-6" data-accordion-inner>Opened(Accordion01)</div>
+        </div>
+      </li>
+      <li class="w-full mt-4" data-multiple-item>
+        <div class="bg-green rounded" data-accordion-label>
+          <button type="button" class="text-white text-26 p-3 w-full h-full text-left" aria-expanded="false" data-accordion-btn>Accordion02</button>
+        </div>
+        <div class="bg-light-gray" aria-hidden="true" data-accordion-content>
+          <div class="p-6" data-accordion-inner>Opened(Accordion02)</div>
+        </div>
+      </li>
+      <li class="w-full mt-4" data-multiple-item>
+        <div class="bg-green rounded" data-accordion-label>
+          <button type="button" class="text-white text-26 p-3 w-full h-full text-left" aria-expanded="false" data-accordion-btn>Accordion03</button>
+        </div>
+        <div class="bg-light-gray" aria-hidden="true" data-accordion-content>
+          <div class="p-6" data-accordion-inner>
+            <div class="bg-green rounded" data-accordion-label>
+              <button type="button" class="text-white text-26 p-3 w-full h-full text-left" aria-expanded="false" data-accordion-btn>Inner Accordion</button>
+            </div>
+            <div class="bg-white" aria-hidden="true" data-accordion-content>
+              <div class="p-6" data-accordion-inner>Opened(Accordion03 inner)</div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div> -->
+  <!-- / Vanilla Accordion -->
+
+  <!-- GSAP Accordion -->
+  <div id="contents2" class="mt-56" data-multiple-trigger>
+    <p class="text-40 font-bold text-center">GSAP Accordion</p>
+    <p class="text-30 text-center mt-2">- Accessibility Accordion -</p>
+    <ol class="" data-accordion-wrapper>
+      <li class="w-full mt-4" data-multiple-item>
+        <div class="" data-accordion>
+          <div class="bg-green rounded">
+            <button type="button" class="text-white text-26 p-3 w-full h-full text-left" aria-expanded="false" data-accordion-btn>Accordion01</button>
+          </div>
+          <div class="bg-light-gray" aria-hidden="true" data-accordion-content>
+            <div class="p-6">
+              <div class="" data-accordion>
+                <div class="bg-green rounded">
+                  <button type="button" class="text-white text-26 p-3 w-full h-full text-left" aria-expanded="false" data-accordion-btn>Accordion01 inner</button>
+                </div>
+                <div class="bg-white" aria-hidden="true" data-accordion-content>
+                  <div class="p-6">
+                    <p class="">Accordion01 inner contents</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li class="w-full mt-4" data-multiple-item>
+        <div class="" data-accordion>
+          <div class="bg-green rounded">
+            <button type="button" class="text-white text-26 p-3 w-full h-full text-left" aria-expanded="false" data-accordion-btn>Accordion02</button>
+          </div>
+          <div class="bg-light-gray" aria-hidden="true" data-accordion-content>
+            <div class="p-6">
+              <p class="">Accordion02 contents</p>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </div>
+  <!-- /GSAP Accordion -->
+
+  <!-- Simple parallax -->
+  <div id="contents3" class="overflow mt-56">
+    <p class="text-40 font-bold text-center">Parallax</p>
+    <p class="text-30 text-center mt-2">- Simple parallax -</p>
+    <div class="relative flex-center mt-10" style="height: 50vh;" data-sparallax-register>
+      <div class="w-full h-full absolute top-0 left-0 z-under" style="background-image: url(/assets/img/parallax01.jpg); background-repeat: no-repeat; background-position: center; background-size: cover;" data-sparallax-item></div>
+      <p class="text-40 font-bold text-white">Parallax</p>
+    </div>
+  </div>
+  <!-- Simple parallax -->
+
+  <!-- Full view height parallax -->
+  <div id="contents3" class="overflow mt-56">
+    <p class="text-40 font-bold text-center">Parallax</p>
+    <p class="text-30 text-center mt-2">- Full view height parallax -</p>
+    <div class="relative flex-center mt-10" style="height: 100vh;" data-parallax-register>
+      <div class="w-full h-full absolute top-0 left-0 z-under" style="background-image: url(/assets/img/parallax01.jpg); background-repeat: no-repeat; background-position: center; background-size: cover;" data-parallax-item></div>
+      <p class="text-40 font-bold text-white">Parallax 01</p>
+    </div>
+    <div class="relative flex-center" style="height: 100vh;" data-parallax-register>
+      <div class="w-full h-full absolute top-0 left-0 z-under" style="background-image: url(/assets/img/parallax02.jpg); background-repeat: no-repeat; background-position: center; background-size: cover;" data-parallax-item></div>
+      <p class="text-40 font-bold text-white">Parallax 2</p>
+    </div>
+  </div>
+  <!-- /Full view height parallax -->
+
+</main>
+<%- include('./@includes/_footer.ejs', {param:'param'}) %>

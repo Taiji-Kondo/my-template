@@ -1,0 +1,8 @@
+.test {
+  display: block;
+  @apply text-10 text-center;
+
+  @screen sm {
+    @apply text-white;
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "breakpoints": {
+    "xs": 600,
+    "sm": 769,
+    "md": 900,
+    "lg": 1170,
+    "xl": 1366
+  },
+  "padding": 16,
+  "colors": {
+    "black": "#000",
+    "white": "#fff",
+    "gray": "#231815",
+    "light-gray": "#a4a4a4",
+    "green": "#108a98",
+    "yellow": "#f8e384",
+    "bg": {
+      "gray": "#dededf",
+      "light-green": "rgba(149,210,208, 0.2)"
+    },
+    "btn": {
+      "gray": "#e0dfd1"
+    },
+    "opacity": {
+      "gray": "rgba(204,204,204,0.6)"
+    }
+  },
+  "fontFamily": {
+    "hiragino": ["ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "メイリオ", "meiryo", "ＭＳ Ｐゴシック", "MS PGothic", "robot", "Droid Sans","sans-serif"]
+  },
+  "lineHeight": {
+    "1.2": "1.2",
+    "1.3": "1.3",
+    "1.35": "1.35",
+    "1.4": "1.4",
+    "1.45": "1.45",
+    "1.55": "1.55",
+    "1.6": "1.6"
+  },
+  "zIndex": {
+    "modal": 200,
+    "gnav": 150,
+    "header": 100,
+    "gotop": 10,
+    "main": 1,
+    "under": -1
+  }
+}
