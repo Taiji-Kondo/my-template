@@ -1,6 +1,9 @@
 <?php
 declare(strict_types=1);
 
+//TODO
+//@2x対応
+
 class Picture {
   private $OPTIONS = [
     'file_path' => '',

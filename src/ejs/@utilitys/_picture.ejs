@@ -1,26 +1,34 @@
 <%
-  const _picture = function (path = 'path', ext = 'png', alt = '', classes = '', media = 'sm', sp = true) {
-    const $MEDIA = json['breakpoints'][media];
-    const $PC_IMAGE = `${path}.${ext}`;
-    const $PC_2x_IMAGE = `${path}@2x.${ext}`;
-    const $SP_IMAGE = `${path}_sp.${ext}`;
-    const $SP_2x_IMAGE = `${path}_sp@2x.${ext}`;
+const _picture = function (path = 'path', ext = 'png', alt = '', classes = '', media = 'sm', sp = true, retina = true) {
+  const $MEDIA = json['breakpoints'][media];
+  const $PC_IMAGE = `${path}.${ext}`;
+  const $PC_2x_IMAGE = `${path}@2x.${ext}`;
+  const $SP_IMAGE = `${path}_sp.${ext}`;
+  const $SP_2x_IMAGE = `${path}_sp@2x.${ext}`;
 
-    if (sp) {
-      return '<picture>' +
-        '<source media="(min-width: ' + $MEDIA + 'px)" srcset="' + $SP_IMAGE + ' 1x, ' + $SP_2x_IMAGE + ' 2x">' +
-        '<img class="img ' + classes + '" src="' + $PC_IMAGE + '" srcset="' + $PC_IMAGE + ' 1x, ' + $PC_2x_IMAGE + ' 2x" alt="' + alt + '">'
-        '</picture>'
+  const $SOURCE_DEFAULT = `<source media="(max-width: ${$MEDIA}px)" srcset="${$SP_IMAGE}">`;
+  const $SOURCE_RETINA = `<source media="(max-width: ${$MEDIA}px)" srcset="${$SP_IMAGE} 1x, ${$SP_2x_IMAGE} 2x">`;
+  const $IMG_DEFAULT = `<img class="img ${classes}" src="${$PC_IMAGE}" alt="${alt}">`;
+  const $IMG_RETINA = `<img class="img ${classes}" src="${$PC_IMAGE}" srcset="${$PC_IMAGE} 1x, ${$PC_2x_IMAGE} 2x" alt="${alt}">`;
+
+  if (sp) {
+    if (retina) {
+      return `<picture>${$SOURCE_RETINA + $IMG_RETINA}</picture>`;
     } else {
-      return '<picture>' +
-        '<img class="img ' + classes + '" src="' + $PC_IMAGE + '" srcset="' + $PC_IMAGE + ' 1x, ' + $PC_2x_IMAGE + ' 2x" alt="' + alt + '">'
-        '</picture>'
+      return `<picture>${$SOURCE_DEFAULT + $IMG_DEFAULT}</picture>`;
+    }
+  } else {
+    if (retina) {
+      return `<picture>${$IMG_RETINA}</picture>`;
+    } else {
+      return `<picture>${$IMG_DEFAULT}</picture>`;
     }
   }
+}
 %>
 
 <%
-  picture = function (path = 'path', ext = 'png', alt = '', classes = '', media = 'sm', sp = true) {
-    return _picture(path, ext, alt, classes, media, sp);
-  }
+picture = function ($options) {
+  return _picture($options.path, $options.ext, $options.alt, $options.classes, $options.media, $options.sp, $options.retina);
+}
 %>
