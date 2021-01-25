@@ -1,47 +1,162 @@
 <?php
 declare(strict_types=1);
 
-//TODO
-//アスペクト比をSP・PCで変える
-//ファイル検索（_sp,1x.2xなどを調べる）
-//viewと機能の分離
-
 class Picture {
+  private $OPTIONS = [
+    'file_path' => '',
+    'file_name' => '',
+    'ext' => '',
+    'alt' => '',
+    'classes' => '',
+    'media' => '',
+  ];
 
-  public function get_picture($picture_name = '', $ext = 'png', $alt = '', $classes = '', $media = 'sm', $sp = true) {
-    $JSON_DATA = Json::get_json('/@json/variables.json');
-    $MEDIA = $JSON_DATA["breakpoints"][$media] . 'px';
-    $PICTURE_NAME = self::get_picture_path($picture_name);
-    $PICTURE_FILE_NAME = self::get_picture_file_path($picture_name).'.'.$ext;
-    $PC_IMAGE = $PICTURE_NAME . '.' . $ext;
-    $PC_2x_IMAGE = $PICTURE_NAME . '@2x.' . $ext;
-    $SP_IMAGE = $PICTURE_NAME . '_sp.' . $ext;
-    $SP_2x_IMAGE = $PICTURE_NAME . '_sp@2x.' . $ext;
-    $ASPECT = self::get_aspect($PICTURE_FILE_NAME);
-    $IF_SRCSET = "<source media='(max-width: {$MEDIA}' srcset='{$PC_IMAGE} 1x, {$PC_2x_IMAGE} 2x'>";
+  public function __construct($file_path, $file_name, $ext = 'png', $alt = '', $classes = '', $media = 'sm') {
+    $this->OPTIONS['file_path'] = $file_path;
+    $this->OPTIONS['file_name'] = $file_name;
+    $this->OPTIONS['ext'] = $ext;
+    $this->OPTIONS['alt'] = $alt;
+    $this->OPTIONS['classes'] = $classes;
+    $this->OPTIONS['media'] = $media;
 
-    if($sp) {
-      echo "<div style='padding-top: {$ASPECT}%'></div><picture>{$IF_SRCSET}<img class='{$classes}' src='{$SP_IMAGE}' srcset='{$SP_IMAGE} 1x, {$SP_2x_IMAGE} 2x' alt='{$alt}'></picture>";
-    } else {
-      echo "<div style='padding-top: {$ASPECT}%'></div><picture><img class='{$classes}' src='{$SP_IMAGE}' srcset='{$SP_IMAGE} 1x, {$SP_2x_IMAGE} 2x' alt='{$alt}'></picture>";
-    }
+    // Judge by whether this have '_sp'
+    $FILES = $this->getFiles($this->OPTIONS['file_path']);
+    $picture_name_sp = $this->OPTIONS['file_name'] . '_sp';
+    $this->hasSpSize($FILES, $picture_name_sp) ? $this->createPictureSP() : $this->createPicturePC();
   }
 
-  private function get_picture_path(string $picture_name): string
+  // PC only
+  private function createPicturePC() {
+    $FILE_NAME = $this->createFileName();
+    $FILE_PATH = $this->get_file_path($FILE_NAME['FILE_NAME_PC']);
+    $ASPECT = $this->getAspect($FILE_NAME);
+    $OUTPUT_IMG_NAME = $this->createOutputImgName($FILE_PATH);
+
+    echo "<div style='padding-top: {$ASPECT['PC_ASPECT']}%'></div><picture><img class='{$this->OPTIONS['media']}' src='{$OUTPUT_IMG_NAME['PC_IMAGE']}' srcset='{$OUTPUT_IMG_NAME['PC_IMAGE']} 1x, {$OUTPUT_IMG_NAME['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+  }
+
+  // SP and PC
+  private function createPictureSP() {
+    $MEDIA = $this->getMedia();
+    $FILE_NAME = $this->createFileName();
+    $FILE_PATH = $this->get_file_path($FILE_NAME['FILE_NAME_PC']);
+    $ASPECT = $this->getAspect($FILE_NAME);
+    $OUTPUT_IMG_NAME = $this->createOutputImgName($FILE_PATH);
+
+    $SOURCE = "<source media='(max-width: {$MEDIA}' srcset='{$OUTPUT_IMG_NAME['SP_IMAGE']} 1x, {$OUTPUT_IMG_NAME['SP_2x_IMAGE']} 2x'>";
+
+    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$ASPECT['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$ASPECT['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='{$this->OPTIONS['media']}' src='{$OUTPUT_IMG_NAME['PC_IMAGE']}' srcset='{$OUTPUT_IMG_NAME['PC_IMAGE']} 1x, {$OUTPUT_IMG_NAME['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+  }
+
+  /**
+   * @return string
+   * Return breakpoint value with 'px'
+   */
+  private function getMedia(): string
   {
-    $SERVER_PATH = get_template_directory_uri();
-    return $SERVER_PATH . $picture_name;
+    $json_data = Json::get_json('/@json/variables.json');
+    return $json_data["breakpoints"][$this->OPTIONS['media']] . 'px';
   }
 
-  private function get_picture_file_path(string $picture_name): string
+  /**
+   * @return string[]
+   * Return file_path and file_name combined
+   *Returns the normal image name and the image name with '_sp'
+   */
+  private function createFileName(): array
   {
-    $FILE_PATH = get_template_directory();
-    return $FILE_PATH . $picture_name;
+    return [
+      'FILE_NAME_PC' => $this->OPTIONS['file_path'] . $this->OPTIONS['file_name'],
+      'FILE_NAME_SP' => $this->OPTIONS['file_path'] . $this->OPTIONS['file_name'] . '_sp',
+    ];
   }
 
-  private function get_aspect(string $picture_path) {
-    $WIDTH = getimagesize($picture_path)[0];
-    $HEIGHT = getimagesize($picture_path)[1];
+  /**
+   * @param string $file_name
+   * @return string
+   * Return template directory image file path
+   */
+  private function get_file_path(string $file_name): string
+  {
+    $FILE_PATH = get_template_directory_uri();
+    return $FILE_PATH . $file_name;
+  }
+
+  /**
+   * @param string $file_name
+   * @return string
+   * Return server side image file path
+   */
+  private function get_picture_server_path(string $file_name): string
+  {
+    $SERVER_PATH = get_template_directory();
+    return $SERVER_PATH . $file_name;
+  }
+
+  /**
+   * @param string $file_server_path
+   * @return float|int
+   */
+  private function createAspect(string $file_server_path) {
+    $WIDTH = getimagesize($file_server_path)[0];
+    $HEIGHT = getimagesize($file_server_path)[1];
     return ($HEIGHT / $WIDTH) * 100;
+  }
+
+  /**
+   * @param array $file_name
+   * @return float[]|int[]
+   * Return aspect for ps,sp
+   */
+  private function getAspect(array $file_name): array
+  {
+    $PICTURE_SERVER_PATH_PC = $this->get_picture_server_path($file_name['FILE_NAME_PC']) . '.' . $this->OPTIONS['ext'];
+    $PICTURE_SERVER_PATH_SP = $this->get_picture_server_path($file_name['FILE_NAME_SP']) . '.' . $this->OPTIONS['ext'];
+    return [
+      'PC_ASPECT' => $this->createAspect($PICTURE_SERVER_PATH_PC),
+      'SP_ASPECT' => $this->createAspect($PICTURE_SERVER_PATH_SP),
+    ];
+  }
+
+  /**
+   * @param string $file_path
+   * @return string[]
+   * Return pc,sp,@2x image name
+   */
+  private function createOutputImgName(string $file_path): array
+  {
+    return [
+      'PC_IMAGE' => $file_path . '.' . $this->OPTIONS['ext'],
+      'PC_2x_IMAGE' => $file_path . '@2x.' . $this->OPTIONS['ext'],
+      'SP_IMAGE' => $file_path . '_sp.' . $this->OPTIONS['ext'],
+      'SP_2x_IMAGE' => $file_path . '_sp@2x.' . $this->OPTIONS['ext'],
+    ];
+  }
+
+  /**
+   * @param $file_path
+   * @return array
+   * Return image list
+   */
+  private function getFiles($file_path): array {
+    $ROOT_FILE_PATH = get_template_directory();
+    $ROOT_AFTER_PATH = $file_path . '*';
+    return glob($ROOT_FILE_PATH . $ROOT_AFTER_PATH);
+  }
+
+  /**
+   * @param array $files
+   * @param string $file_name
+   * @return bool
+   * Judge if file_name is in image list
+   */
+  private function hasSpSize(array $files, string $file_name): bool {
+    $RESULT = false;
+    foreach ($files as $file) {
+      if(strpos($file, $file_name)) {
+        $RESULT = true;
+      }
+    }
+    return $RESULT;
   }
 }
