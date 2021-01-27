@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 //TODO
-//@2x対応
+//リファクタリング
 
 class Picture {
   private $OPTIONS = [
@@ -22,33 +22,71 @@ class Picture {
     $this->OPTIONS['classes'] = $classes;
     $this->OPTIONS['media'] = $media;
 
-    // Judge by whether this have '_sp'
+    $this->register();
+  }
+
+  // Determine which function to call
+  private function register() {
     $FILES = $this->getFiles($this->OPTIONS['file_path']);
     $picture_name_sp = $this->OPTIONS['file_name'] . '_sp';
-    $this->hasSpSize($FILES, $picture_name_sp) ? $this->createPictureSP() : $this->createPicturePC();
+    $picture_name_retina = $this->OPTIONS['file_name'] . '@';
+
+    // Judge by whether this have '_sp'
+    if ($this->hasFile($FILES, $picture_name_sp)) {
+      // Judge by whether this have '@'
+      $this->hasFile($FILES, $picture_name_retina) ? $this->createPictureSP() : $this->createPictureSPRetina();
+    } else {
+      // Judge by whether this have '@'
+      $this->hasFile($FILES, $picture_name_retina) ? $this->createPicturePC() : $this->createPicturePCRetina();
+    }
+  }
+
+  /**
+   * @return array
+   * Returns the information needed to create
+   */
+  private function _createPicture(): array
+  {
+    $FILE_NAME = $this->createFileName();
+    $FILE_PATH = $this->get_file_path($FILE_NAME['FILE_NAME_PC']);
+
+    return [
+      'MEDIA' => $this->getMedia(),
+      'ASPECT' => $this->getAspect($FILE_NAME),
+      'OUTPUT_IMG_NAME' => $this->createOutputImgName($FILE_PATH),
+    ];
   }
 
   // PC only
   private function createPicturePC() {
-    $FILE_NAME = $this->createFileName();
-    $FILE_PATH = $this->get_file_path($FILE_NAME['FILE_NAME_PC']);
-    $ASPECT = $this->getAspect($FILE_NAME);
-    $OUTPUT_IMG_NAME = $this->createOutputImgName($FILE_PATH);
+    $CREATE_DATA = $this->_createPicture();
 
-    echo "<div style='padding-top: {$ASPECT['PC_ASPECT']}%'></div><picture><img class='{$this->OPTIONS['media']}' src='{$OUTPUT_IMG_NAME['PC_IMAGE']}' srcset='{$OUTPUT_IMG_NAME['PC_IMAGE']} 1x, {$OUTPUT_IMG_NAME['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><picture><img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
+  }
+
+  // PC only and cover Retina
+  private function createPicturePCRetina() {
+    $CREATE_DATA = $this->_createPicture();
+
+    echo "<div style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><picture><img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   // SP and PC
   private function createPictureSP() {
-    $MEDIA = $this->getMedia();
-    $FILE_NAME = $this->createFileName();
-    $FILE_PATH = $this->get_file_path($FILE_NAME['FILE_NAME_PC']);
-    $ASPECT = $this->getAspect($FILE_NAME);
-    $OUTPUT_IMG_NAME = $this->createOutputImgName($FILE_PATH);
+    $CREATE_DATA = $this->_createPicture();
 
-    $SOURCE = "<source media='(max-width: {$MEDIA}' srcset='{$OUTPUT_IMG_NAME['SP_IMAGE']} 1x, {$OUTPUT_IMG_NAME['SP_2x_IMAGE']} 2x'>";
+    $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['SP_2x_IMAGE']} 2x'>";
 
-    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$ASPECT['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$ASPECT['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='{$this->OPTIONS['media']}' src='{$OUTPUT_IMG_NAME['PC_IMAGE']}' srcset='{$OUTPUT_IMG_NAME['PC_IMAGE']} 1x, {$OUTPUT_IMG_NAME['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+  }
+
+  // SP and PC and cover Retina
+  private function createPictureSPRetina() {
+    $CREATE_DATA = $this->_createPicture();
+
+    $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']}'>";
+
+    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   /**
@@ -64,7 +102,7 @@ class Picture {
   /**
    * @return string[]
    * Return file_path and file_name combined
-   *Returns the normal image name and the image name with '_sp'
+   * Returns the normal image name and the image name with '_sp'
    */
   private function createFileName(): array
   {
@@ -153,7 +191,7 @@ class Picture {
    * @return bool
    * Judge if file_name is in image list
    */
-  private function hasSpSize(array $files, string $file_name): bool {
+  private function hasFile(array $files, string $file_name): bool {
     $RESULT = false;
     foreach ($files as $file) {
       if(strpos($file, $file_name)) {
