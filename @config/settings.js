@@ -16,11 +16,11 @@ const WebpackSettings = {
   vendors: {
     vendor: {
       test: /node_modules/,
-      name: WP_PATH + '/assets/js/vendor',
+      name: WP_PATH + 'assets/js/vendor',
     },
     vendorModules: {
       test: /src\/js\/@modules/,
-      name: WP_PATH + '/assets/js/vendor-modules',
+      name: WP_PATH + 'assets/js/vendor-modules',
     },
   },
   styleLint: ['./src/scss/*.scss', './src/scss/**/*.scss'],
@@ -28,7 +28,7 @@ const WebpackSettings = {
 
 const ImageminSettings = {
   from: 'src/img/**/*.{jpg,png,gif,svg}',
-  to: '../' + WP_PATH + '/assets/img/',
+  to: '../' + WP_PATH + 'assets/img/',
 };
 
 const GulpSettings = {

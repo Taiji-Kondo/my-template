@@ -61,14 +61,14 @@ class Picture {
   private function createPicturePC() {
     $CREATE_DATA = $this->_createPicture();
 
-    echo "<div style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><picture><img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><picture><img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   // PC only and cover Retina
   private function createPicturePCRetina() {
     $CREATE_DATA = $this->_createPicture();
 
-    echo "<div style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><picture><img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><picture><img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   // SP and PC
@@ -77,7 +77,7 @@ class Picture {
 
     $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['SP_2x_IMAGE']} 2x'>";
 
-    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   // SP and PC and cover Retina
@@ -86,7 +86,7 @@ class Picture {
 
     $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']}'>";
 
-    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['media']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   /**
