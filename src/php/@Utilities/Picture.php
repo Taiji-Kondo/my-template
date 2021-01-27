@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 //TODO
+//Tailwind対策でクラス名を動的に組み合わせるのを避ける
 //リファクタリング
 
 class Picture {

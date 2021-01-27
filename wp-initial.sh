@@ -26,7 +26,6 @@ wp plugin delete akismet --allow-root
 
 # プラグインインストール (必要に応じてコメントアウトを外す)
 wp plugin install advanced-custom-fields --activate --allow-root
-wp plugin install all-in-one-seo-pack --activate --allow-root
 wp plugin install all-in-one-wp-migration --activate --allow-root
 wp plugin install custom-post-type-ui --activate --allow-root
 wp plugin install siteguard --activate --allow-root
