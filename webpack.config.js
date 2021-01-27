@@ -141,7 +141,6 @@ module.exports = () => {
           extractComments: true,
           parallel: true,
           terserOptions: {
-            extractComments: 'all',
             compress: {
               drop_console: true,
             },

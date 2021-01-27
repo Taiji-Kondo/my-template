@@ -73,13 +73,9 @@ module.exports = {
       // fontSize utilities
       makeUtilities(10, 50, 2, 'fontSize', 'text');
       // maxWidth utilities
-      makeUtilities(200, 1200, 10, 'maxWidth', 'max-w');
+      makeUtilities(4, 1200, 4, 'maxWidth', 'max-w');
       newUtilities['.max-w-none'] = { ['maxWidth']: 'none' };
       newUtilities['.max-w-full'] = { ['maxWidth']: '100%' };
-      // minWidth utilities
-      makeUtilities(100, 400, 10, 'minWidth', 'min-w');
-      newUtilities['.min-w-auto'] = { ['minWidth']: 'auto' };
-      newUtilities['.min-w-full'] = { ['minWidth']: '100%' };
       // boxShadow utilities
       newUtilities['.shadow-large'] = { ['boxShadow']: '0 3px 6px rgba(0,0,0, 0.16)' };
       newUtilities['.shadow-medium'] = { ['boxShadow']: '0 0 6px rgba(0,0,0, 0.16)' };

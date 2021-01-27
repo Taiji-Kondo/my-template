@@ -4,6 +4,9 @@
 // https://greensock.com/docs/v3/Plugins/ScrollToPlugin
 // https://greensock.com/cheatsheet/
 
+//TODO
+//途中から出す処理をわける
+
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 gsap.registerPlugin(ScrollToPlugin);
