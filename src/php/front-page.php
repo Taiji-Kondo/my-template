@@ -9,7 +9,7 @@ get_header();
   <div>
     <section>
       <h2>Picture class</h2>
-      <div class="img relative w-full">
+      <div class="relative w-full">
         <?php new Picture('/assets/img/sample/', 'parallax01'); ?>
       </div>
     </section>
