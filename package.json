@@ -16,7 +16,7 @@
     "start-php-pro": "NODE_ENV=production run-s @start-php",
     "start-wp": "NODE_ENV=development run-s @start-wp",
     "start-wp-pro": "NODE_ENV=production run-s @start-wp",
-    "build": "NODE_ENV=production run-s gulp-clean gulp-ejs",
+    "build": "NODE_ENV=production run-s gulp-clean gulp-ejs imagemin webpack-build",
     "build-php": "NODE_ENV=production run-s gulp-clean gulp-initial-file",
     "server": "browser-sync start --config @config/bs-config.js",
     "@imagemin": "run-p imagemin watch:imagemin",
