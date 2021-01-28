@@ -28,6 +28,7 @@ wp plugin delete akismet --allow-root
 wp plugin install advanced-custom-fields --activate --allow-root
 wp plugin install all-in-one-wp-migration --activate --allow-root
 wp plugin install custom-post-type-ui --activate --allow-root
+wp plugin install custom-post-type-permalinks --activate --allow-root
 wp plugin install siteguard --activate --allow-root
 # wp plugin install contact-form-7 --activate --allow-root
 # wp plugin install wp-multibyte-patch --activate --allow-root
