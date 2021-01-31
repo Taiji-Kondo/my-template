@@ -1,6 +1,7 @@
-/* すべてのpadding,margin,borderをnoneに */
-
-/* font-weight,font-size,font-family,letter-spacing,word-wrapを親要素から引き継ぐ */
+/*
+  すべてのpadding,margin,borderをnoneに
+  font-weight,font-size,font-family,letter-spacing,word-wrapを親要素から引き継ぐ
+*/
 * {
   padding: 0;
   margin: 0;
@@ -13,52 +14,56 @@
 }
 
 
-/* 全ての要素のbox-sizingをborder-boxにする。 */
+/*
+  全ての要素のbox-sizingをborder-boxにする。
+*/
 *,
 ::after,
 ::before {
   box-sizing: border-box;
 }
 
-/* font-sizeは100%以外だとユーザビリティを損なう為100%必須 */
-
-/* デフォルトのline-heightを1に指定 */
-
-/* デフォルトのletter-spacingを0に設定 */
+/*
+  初期設定
+  font-sizeは100%以外だとユーザビリティを損なう為100%必須
+*/
 html {
   overflow-x: hidden;
   line-height: 1;
   letter-spacing: 0;
-
-  /* 英単語を改行するように変更 */
+  //英単語を改行するように変更
   word-break: break-all;
-
-  /* 文字詰め */
+  //文字詰め
   font-feature-settings: 'palt';
-
-  /* モバイル端末で横にした時にテキスト自動拡大をさせない */
+  //モバイル端末で横にした時にテキスト自動拡大をさせない
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
-
-  /* フォントのアンチエイリアス */
+  //フォントのアンチエイリアス
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  overflow-x: hidden;
+  min-height: 100vh;
+  //overflow-x: hidden;
   text-align: left;
 }
 
-/* aタグをinline要素で使うことが無いので、blockにする。 */
+/*
+  aタグをinline要素で使うことが無いので、blockにする。
+*/
 a {
   display: block;
   color: inherit;
   text-decoration: none;
 }
 
-
+//a[href^='tel:'] {
+//  @media (hover:hover) {
+//    pointer-events: none;
+//  }
+//}
 
 img {
   width: 100%;
@@ -77,17 +82,20 @@ img, svg, video, canvas, audio, iframe, embed, object {
   max-width: 100%;
 }
 
-/* aタグをクリックできないので、aの中のobjectタグをpointer-eventsを切る */
+/*
+  aタグをクリックできないので、aの中のobjectタグをpointer-eventsを切る
+*/
 a object {
   pointer-events: none;
 }
 
-/* ul,olではlist-styleを表示しない。 */
-ul,ol {
+//ul,olではlist-styleを表示しない。
+ul[class],
+ol[class] {
   list-style-type: none;
 }
 
-/* IE対策 */
+//IE対策
 article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
   display: block;
 }
@@ -97,13 +105,14 @@ table {
   border-collapse: collapse;
 }
 
-address,em {
+address {
   font-style: normal;
 }
 
-/* Formのリセット */
-
-/* 16px以下だとスマホで拡大されるので拡大されないように */
+/*
+  Formのリセット
+*/
+//16px以下だとスマホで拡大されるので拡大されないように
 button,
 input,
 optgroup,
@@ -144,17 +153,17 @@ textarea {
 }
 
 
-/* HTMLのdisabled要素のcursorを初期値に戻す */
+//HTMLのdisabled要素のcursorを初期値に戻す
 [disabled] {
   cursor: default;
 }
 
-/* HTMLのhidden属性を表示させない */
+//HTMLのhidden属性を表示させない
 [hidden] {
   display: none !important;
 }
 
-/* 端末の設定でトランジションとアニメーションを切っている人にはアニメーションとトランジションさせない */
+//端末の設定でトランジションとアニメーションを切っている人にはアニメーションとトランジションさせない
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -167,7 +176,12 @@ textarea {
   }
 }
 
-/* mouseとtouchではoutlineを表示しない */
+//vueのマスタッシュを表示しない
+[v-cloak] {
+  visibility: hidden;
+}
+
+//mouseとtouchではoutlineを表示しない
 [data-whatinput='mouse'] *:focus,
 [data-whatinput='touch'] *:focus {
   outline: none;

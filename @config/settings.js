@@ -1,6 +1,6 @@
 const WP_THEME_NAME = 'my_template'; // テーマ名
-const WP = true; //wpかベタか(true == wp)
-const PHP = true; //phpかベタか(true == php)
+const WP = true; //wpかベタか(true == use wp)
+const PHP = true; //phpかベタか(true == use php)
 const WP_PATH = WP ? `wp/app/public/wp-content/themes/${WP_THEME_NAME}/` : 'public/'; // コンパイル後のファイルが吐き出されるフォルダ
 const PROXY = 'http://localhost:8000/';
 
