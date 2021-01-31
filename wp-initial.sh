@@ -41,6 +41,7 @@ wp plugin install siteguard --activate --allow-root
 # wp theme delete twentysixteen --allow-root
 wp theme delete twentyseventeen --allow-root
 wp theme delete twentynineteen --allow-root
+wp theme delete twentytwenty--allow-root
 
 # 新規テーマを追加してアクティブ化(new-themeは任意のテーマ識別子)
 #wp scaffold _s new-theme --theme_name="modules" --author="" --allow-root
@@ -53,7 +54,7 @@ wp theme delete twentytwenty --allow-root
 wp option update permalink_structure /%post_id%/ --allow-root
 
 # localhost立ち上げ
-curl http://localhost:8000
+#curl http://localhost:8000
 
 #コンテナを起動し続ける
 tail -f /dev/null
