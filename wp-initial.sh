@@ -38,17 +38,15 @@ wp plugin install siteguard --activate --allow-root
 # wp plugin install addquicktag --activate --allow-root
 
 # テーマ削除
-# wp theme delete twentysixteen --allow-root
 wp theme delete twentyseventeen --allow-root
 wp theme delete twentynineteen --allow-root
-wp theme delete twentytwenty--allow-root
 
 # 新規テーマを追加してアクティブ化(new-themeは任意のテーマ識別子)
 #wp scaffold _s new-theme --theme_name="modules" --author="" --allow-root
 #wp theme activate new-theme --allow-root
 
 # アクティブテーマを変更後、不要テーマを削除
-wp theme delete twentytwenty --allow-root
+#wp theme delete twentytwenty --allow-root
 
 # パーマリンク更新
 wp option update permalink_structure /%post_id%/ --allow-root
