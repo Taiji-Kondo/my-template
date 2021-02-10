@@ -1,0 +1,25 @@
+.the_content {
+  @apply text-14 leading-normal;
+
+  & img {
+    @apply inline w-auto;
+  }
+
+  & a {
+    @apply inline underline;
+    &:hover {
+      @apply no-underline;
+    }
+  }
+
+  & strong {
+    @apply font-bold;
+  }
+
+  & ol {
+    @apply pl-5 list-decimal;
+  }
+  & ul {
+    @apply pl-5 list-disc;
+  }
+}
