@@ -1,6 +1,4 @@
 <?php
-declare(strict_types=1);
-
 //TODO
 //Tailwind対策でクラス名を動的に組み合わせるのを避ける
 //リファクタリング
@@ -29,16 +27,16 @@ class Picture {
   // Determine which function to call
   private function register() {
     $FILES = $this->getFiles($this->OPTIONS['file_path']);
-    $picture_name_sp = $this->OPTIONS['file_name'] . '_sp';
-    $picture_name_retina = $this->OPTIONS['file_name'] . '@';
+    $picture_name_sp = $this->OPTIONS['file_name'] . '_sp.' . $this->OPTIONS['ext'];
+    $picture_name_retina = $this->OPTIONS['file_name'] . '@2x.' . $this->OPTIONS['ext'];
 
     // Judge by whether this have '_sp'
     if ($this->hasFile($FILES, $picture_name_sp)) {
-      // Judge by whether this have '@'
-      $this->hasFile($FILES, $picture_name_retina) ? $this->createPictureSP() : $this->createPictureSPRetina();
+      // Judge by whether this have '@2x'
+      $this->hasFile($FILES, $picture_name_retina) ? $this->createPictureSPRetina() : $this->createPictureSP();
     } else {
       // Judge by whether this have '@'
-      $this->hasFile($FILES, $picture_name_retina) ? $this->createPicturePC() : $this->createPicturePCRetina();
+      $this->hasFile($FILES, $picture_name_retina) ? $this->createPicturePCRetina() : $this->createPicturePC();
     }
   }
 
@@ -76,18 +74,18 @@ class Picture {
   private function createPictureSP() {
     $CREATE_DATA = $this->_createPicture();
 
-    $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['SP_2x_IMAGE']} 2x'>";
+    $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']})' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']}'>";
 
-    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   // SP and PC and cover Retina
   private function createPictureSPRetina() {
     $CREATE_DATA = $this->_createPicture();
 
-    $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']}'>";
+    $SOURCE = "<source media='(max-width: {$CREATE_DATA['MEDIA']})' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['SP_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['SP_2x_IMAGE']} 2x'>";
 
-    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' alt='{$this->OPTIONS['alt']}'></picture>";
+    echo "<div class='hidden {$this->OPTIONS['media']}:block' style='padding-top: {$CREATE_DATA['ASPECT']['PC_ASPECT']}%'></div><div class='{$this->OPTIONS['media']}:hidden' style='padding-top: {$CREATE_DATA['ASPECT']['SP_ASPECT']}%'></div><picture>{$SOURCE}<img class='img {$this->OPTIONS['classes']}' src='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']}' srcset='{$CREATE_DATA['OUTPUT_IMG_NAME']['PC_IMAGE']} 1x, {$CREATE_DATA['OUTPUT_IMG_NAME']['PC_2x_IMAGE']} 2x' alt='{$this->OPTIONS['alt']}'></picture>";
   }
 
   /**
