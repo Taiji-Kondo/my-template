@@ -130,6 +130,12 @@ module.exports = {
           top: '50%',
           transform: 'translateY(-50%)',
         },
+        '.hover-opacity': {
+          transition: 'opacity .3s ease-in',
+          '&:hover': {
+            opacity: '.75',
+          }
+        },
       };
       addComponents(newComponents, ['responsive']);
     }),

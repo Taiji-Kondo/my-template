@@ -17,23 +17,29 @@ const plugins = [
     chunkFilename: '[id].css',
   }),
   new StyleLintPlugin({
-    configFile: path.resolve('./@config/.stylelintrc.js'),
+    configFile: path.resolve(__dirname, '@config/.stylelintrc.js'),
+    context: path.resolve(__dirname, 'src/scss/'),
+    files: ['**/*.scss'],
     fix: true,
   }),
   new ESLintPlugin({
-    overrideConfigFile: path.resolve('./@config/.eslintrc.js'),
-    context: path.resolve('./src/js'),
+    overrideConfigFile: path.resolve(__dirname, '@config/.eslintrc.js'),
+    context: path.resolve(__dirname, 'src/?(ts|js)/'),
     files: ['**/*.ts', '**/*.tsx'],
     fix: true,
     emitError: true,
   }),
 ];
 
-// phpの有無でで仕分けるためのインスタンス
+// TODO
+// phpのコピーだけ動的に出し分けるようにする
+// phpの有無で出し分けるためのインスタンス
 const copyPlugin = new CopyPlugin({
   patterns: [
     {context: 'src/php', from: '**', to: Settings.WP_PATH},
     {context: '@json/', from: '**', to: `${Settings.WP_PATH}@json`},
+    // {context: 'src/pdf', from: '**', to: `${Settings.WP_PATH}assets/pdf`},
+    // {context: 'src/img', from: '*.ico', to: `${Settings.WP_PATH}assets/img`},
   ],
 });
 

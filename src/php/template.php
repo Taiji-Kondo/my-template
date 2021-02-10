@@ -23,15 +23,15 @@ get_header();
       <h2>Random class</h2>
       <div>
         <p>ミックス</p>
-        <span><?php echo Random::shuffle();; ?></span>
+        <span><?php echo Random::shuffle(); ?></span>
       </div>
       <div>
         <p>数値のみ</p>
-        <span><?php echo Random::int();; ?></span>
+        <span><?php echo Random::int(); ?></span>
       </div>
       <div>
         <p>文字のみ</p>
-        <span><?php echo Random::str();; ?></span>
+        <span><?php echo Random::str(); ?></span>
       </div>
     </section>
   </div>
