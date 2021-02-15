@@ -4,6 +4,7 @@
 
 import { ThrowAttribute } from '../@utilitys/_ThrowAttribute';
 import { BodyFix } from '../@utilitys/_BodyFix';
+import { GetParameter } from "../@utilitys/_GetParameter";
 
 // Youtube data type
 type youtubeData = {
@@ -27,6 +28,18 @@ export class Modal {
     ThrowAttribute.style(element, ['display', 'opacity', 'transitionDuration'], ['none', '0', `${option}ms`]);
   };
 
+  // If it's have parameter
+  private readonly handleParameterOpen = (content: HTMLElement, index: number) => {
+    const modalParam = GetParameter.getParameter('modalParam');
+    if (!modalParam) return;
+
+    const parameter = Number(modalParam);
+    if (!parameter) return;
+
+    const currentNumber = index + 1;
+    parameter === currentNumber && this.handleModal(content, true);
+  }
+
   // YouTubeを含むか判断するメソッド
   private readonly hasYoutube = (element: HTMLElement): boolean => {
     return element.hasAttribute('data-modal-youtube');
@@ -46,47 +59,54 @@ export class Modal {
     }, this.speed);
   };
 
+
+  // Open or Close modal
+  private handleModal = (content: HTMLElement, toOpen: boolean) => {
+    this.bodyState.isFixed(toOpen);
+    if (toOpen) {
+      content.setAttribute('aria-hidden', 'false');
+      content.style.display = 'block';
+      setTimeout(() => {
+        content.style.opacity = '1';
+      }, 0);
+    } else {
+      content.setAttribute('aria-hidden', 'true');
+      content.style.opacity = '0';
+      setTimeout(() => {
+        content.style.display = 'none';
+      }, this.speed);
+    }
+
+    // iframeの追加orリセット
+    if (this.hasYoutube(content)) {
+      toOpen ? this.setYouTube(content) : this.removeYouTube();
+    }
+  }
+
   // main thread
   private modal = (): void => {
-    this.modalElements.forEach((modalElem: HTMLElement): void => {
+    this.modalElements.forEach((modalElem: HTMLElement, index: number): void => {
       const modalOpen = modalElem.querySelector<HTMLElement>('[data-modal-Open]');
       const modalContent = modalElem.querySelector<HTMLElement>('[data-modal-content]');
       const modalClose = modalElem.querySelectorAll<HTMLElement>('[data-modal-close]');
 
-      // 早期リターン
       if (!modalOpen || !modalContent) return;
 
+      // Initialize
       this.initial(modalContent, this.speed);
 
-      // モーダルを開く処理
-      modalOpen.addEventListener('click', () => {
-        this.bodyState.isFixed();
-        modalContent.setAttribute('aria-hidden', 'false');
-        modalContent.style.display = 'block';
-        setTimeout(() => {
-          modalContent.style.opacity = '1';
-        }, 0);
+      // If it's have the parameters, open them
+      this.handleParameterOpen(modalContent, index);
 
-        // YouTubeが入っていた場合
-        if (this.hasYoutube(modalContent)) {
-          this.setYouTube(modalContent);
-        }
+      // Open
+      modalOpen.addEventListener('click', () => {
+        this.handleModal(modalContent, true);
       });
 
-      // モーダルを閉じる処理
+      // Close
       modalClose.forEach((closeElement: HTMLElement) => {
         closeElement.addEventListener('click', () => {
-          this.bodyState.isFixed(false);
-          modalContent.setAttribute('aria-hidden', 'true');
-          modalContent.style.opacity = '0';
-          setTimeout(() => {
-            modalContent.style.display = 'none';
-          }, this.speed);
-
-          // YouTubeのiframeをリセット
-          if (this.hasYoutube(modalContent)) {
-            this.removeYouTube();
-          }
+          this.handleModal(modalContent, false);
         });
       });
     });
