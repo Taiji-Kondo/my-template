@@ -1,70 +1,63 @@
-# js-modules  
+# My Template
 
-* Contents(目次)  
-<br>
-  * [About: このリポジトリについて](##About)
-  * [Initial Settings: 初期設定](##Initial-Settings)
-  * [How To Use: 使用方法](##How-To-Use)  
-  * [Tailwind](##Tailwind)  
-  * [TypeScript](##TypeScript)  
-    * [Accordion](###Accordion)
-    * [Modal](###Modal)
-    * [Tab](###Tab)
-<br>
-<br>
+* Contents(目次)
+  * [About: このリポジトリについて](#About)
+  * [Initial Settings: 初期設定](#Initial-Settings)
+  * [How To Use: 使用方法](#How-To-Use)
+  * [Style](#Style)
+    * [Tailwind](#Tailwind)
+  * [TypeScript](#TypeScript)
+    * [Accordion](#Accordion)
+    * [Modal](#Modal)
+    * [Tab](#Tab)
 
-## About(このリポジトリについて)  
+## About(このリポジトリについて)
+
 ---
-<br>
-このリポジトリはEJS or PHP + TypeScript(JavaScript) + SCSS + Tailwindの環境で構築されています。  
-EJSを使用するかPHPを使用するかはWordpressが入るか否かで選択します。選択肢により設定が変わるので、次項にて設定方法を記載しています。
+**使用技術**
+* EJS
+* PHP
+* Tailwind
+* Sass
+* TypeScript
+* Docker
 
-<br>
-<br>
+この環境はWordpressを使用した場合＋使用しない場合（ベタ）どちらも対応しています。  
+npm scriptの使い分けにより立ち上がるサーバーとコンパイル先のファルダが変わります。  
+また、Wordpressの立ち上げはDockerで行います。
 
-## Initial Settings(初期設定)  
+## Initial Settings(初期設定)
+
 ---
 <br>
 まずはこのリポジトリをクローンしてください。<br>
 その後ターミナルにて
 
 ```
-$ npm ci
+npm ci
 ```
 
 コマンドを入力します。<br>
-上記コマンドにより`node_modules`がインストールされます。<br>
-<br>
-次に`settings.js`ファイルにて吐き出されるファイルの設定をします。
+上記コマンドにより`package-lock.json`をもとに依存関係を解決しながら`node_modules`がインストールされます。  
+  
+次に`@config/settings.js`ファイルにて使用する技術の選定をします。
 
 ```
-const WP_THEME_NAME = 'modules'; // テーマ名
-const WP_THEME_NAME_LOCAL = 'modules'; // ブラウザシンクのURL名
-const WP_PATH = `wp/app/public/wp-content/themes/${WP_THEME_NAME}/`; // コンパイル後のファイルが吐き出されるフォルダ
+const WP_THEME_NAME = 'my_template'; // テーマ名
+const WP = true; // wpかベタか(true == use wp)
+const PHP = true; // phpかベタか(true == use php)
+const WP_PATH = WP ? `wp/app/public/wp-content/themes/${WP_THEME_NAME}/` : 'public/'; // コンパイル後のファイルが吐き出されるフォルダ
+const PROXY = 'http://localhost:8000/';
 ```
 
-上記のコードに任意の設定をします。<br>
-
-```
-const NO_WP = true; //wpかベタか(boolean)
-```
-
-上記はWPが入るか否かで`true`,`false`を切り替えます。（WPが入る場合は`false`）<br>
-`true`にすることでEJSがコンパイルされ`false`にすることでPHPがコンパイルされます。<br>
-`false`にした際は`webpack.config.js`ファイルの以下の部分のコメントアウトを解除します。
-
-```
-// new CopyPlugin({
-//   patterns: [
-//     { context: 'src/php', from: '**', to: Settings.WP_PATH },
-//   ],
-// }),
-```
-<br>
+上記のコードに任意の設定をします。  
+* WordPressを使用する際は`WP`と`PHP`を`true`にします。
+* ベタの場合は`WP`と`PHP`を`false`にします。
+* PHPを使用したいがWordpressが入らない場合は`WP`を`false`、`PHP`を`true`にします。
 
 ## How To Use(使用方法)
+
 ---
-<br>
 以下コマンドを入力することでコンパイル、ウォッチ、画像圧縮（ウォッチあり）が走り、開発を開始できます。
 
 ```
@@ -76,7 +69,10 @@ $ npm start
 ```
 $ npm run build
 ```
+
 <br>
+
+##Style
 
 ## Tailwind
 ---
@@ -112,6 +108,7 @@ classを追加したい場合は`tailwind.config.js`ファイル内の`theme->ex
 <br>
 
 ### Accordion
+
 <br>
 
 #### 基本的な使用方法
@@ -133,7 +130,8 @@ classを追加したい場合は`tailwind.config.js`ファイル内の`theme->ex
 </ol>
 ```
 
-`data-accordion-label`, `aria-expanded="false"`, `data-accordion-btn`, `aria-hidden="true"`,`data-accordion-content`, `data-accordion-inner`は必須です。
+`data-accordion-label`, `aria-expanded="false"`, `data-accordion-btn`, `aria-hidden="true"`,`data-accordion-content`
+, `data-accordion-inner`は必須です。
 <br>
 <br>
 
@@ -170,6 +168,7 @@ classを追加したい場合は`tailwind.config.js`ファイル内の`theme->ex
 <br>
 
 ### Modal
+
 <br>
 
 #### 基本的な使用方法
@@ -190,7 +189,8 @@ classを追加したい場合は`tailwind.config.js`ファイル内の`theme->ex
 </div>
 ```
 
-`data-modal-target="modal1`, `role="dialog"`, `data-modalContent`, `aria-hidden="true"`,`aria-label="close"`, `data-close`は必須です。
+`data-modal-target="modal1`, `role="dialog"`, `data-modalContent`, `aria-hidden="true"`,`aria-label="close"`
+, `data-close`は必須です。
 <br>
 <br>
 **`data-modal-target="modal1`の番号は連番にしてください。**
