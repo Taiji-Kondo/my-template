@@ -15,19 +15,7 @@ const BROWSER_SYNC = {
     scroll: false,
     forms: false,
   },
+  proxy: Settings.PROXY,
 };
-
-// serverの設定
-// const server = {
-//   baseDir: './public',
-//   index: 'index.html',
-// };
-
-// proxyの設定
-const wp_proxy = Settings.PROXY ?? `http://${Settings.WP_THEME_NAME}.wp/`;
-const php_proxy = 'http://0.0.0.0:9999/';
-
-// wpが入るのであればproxyを追加、入らなければserverを追加
-Settings.WP ? (BROWSER_SYNC.proxy = wp_proxy) : (BROWSER_SYNC.proxy = php_proxy);
 
 module.exports = BROWSER_SYNC;

@@ -31,11 +31,6 @@ wp plugin install custom-post-type-ui --activate --allow-root
 wp plugin install custom-post-type-permalinks --activate --allow-root
 wp plugin install siteguard --activate --allow-root
 # wp plugin install contact-form-7 --activate --allow-root
-# wp plugin install wp-multibyte-patch --activate --allow-root
-# wp plugin install backwpup --activate --allow-root
-# wp plugin install wp-mail-smtp --activate --allow-root
-# wp plugin install broken-link-checker --activate --allow-root
-# wp plugin install addquicktag --activate --allow-root
 
 # テーマ削除
 wp theme delete twentyseventeen --allow-root
@@ -50,6 +45,8 @@ wp theme delete twentynineteen --allow-root
 
 # パーマリンク更新
 wp option update permalink_structure /%post_id%/ --allow-root
+
+echo -- finished --
 
 # localhost立ち上げ
 #curl http://localhost:8000
