@@ -10,6 +10,7 @@ get_header();
     <section>
       <h2>Picture class</h2>
       <div class="relative w-full">
+        <!--    Picture($file_path, $file_name, $ext, $alt, $class, $media)     -->
         <?php new Picture('/assets/img/sample/', 'parallax01'); ?>
       </div>
     </section>
