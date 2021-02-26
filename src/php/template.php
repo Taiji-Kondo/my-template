@@ -35,6 +35,28 @@ get_header();
         <span><?php echo Random::str(); ?></span>
       </div>
     </section>
+
+    <section>
+      <h2>Post archive</h2>
+      <?php if( have_posts() ) : ?>
+        <?php while( have_posts() ) : the_post(); ?>
+          <?php // contents ?>
+        <?php endwhile;?>
+      <?php endif; ?>
+    </section>
+
+    <section>
+      <h2>WP_Query archive</h2>
+      <?php $newQuery = new WP_Query(array(
+        'post_type' => array(/* post type */),
+        'posts_per_page' => -1,
+      )); ?>
+      <?php if( $newQuery->have_posts() ) : ?>
+        <?php while( $newQuery->have_posts() ) : $newQuery->the_post(); ?>
+          <?php // contents ?>
+        <?php endwhile;?>
+      <?php endif; ?>
+    </section>
   </div>
 </main>
 

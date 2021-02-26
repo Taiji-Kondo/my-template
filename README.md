@@ -2,10 +2,12 @@
 
 [Tailwind]: https://nerdcave.com/tailwind-cheat-sheet
 
-- Contents(目次)
-  - [About: このリポジトリについて](#About)
-  - [Initial Settings: 初期設定](#Initial-Settings)
-  - [How To Use: 使用方法](#How-To-Use)
+Contents(目次)
+
+  - [About](#About)
+  - [Initial Settings](#Initial Settings)
+  - [How To Use](#How To Use)
+  - [PHP](#PHP)
   - [Style](#Style)
     - [Tailwind](#Tailwind)
   - [TypeScript](#TypeScript)
@@ -13,10 +15,10 @@
     - [Modal](#Modal)
     - [Tab](#Tab)
 
-## About(このリポジトリについて)
-___
+## About
 
 **使用技術**
+
 - EJS
 - PHP
 - Tailwind
@@ -24,13 +26,14 @@ ___
 - TypeScript
 - Docker
 
-この環境はWordpressを使用した場合＋使用しない場合（ベタ）どちらも対応しています。  
+このリポジトリはWordpressを使用した場合＋使用しない場合（ベタ）どちらも対応しています。  
 npm scriptの使い分けにより立ち上がるサーバーとコンパイル先のファルダが変わります。  
 また、Wordpressの立ち上げはDockerで行います。
 
-## Initial Settings(初期設定)
 ___
-まずはこのリポジトリをクローンしてください。<br>
+
+## Initial Settings
+まずはこのリポジトリをクローンしてください。  
 その後ターミナルにて
 
 ```
@@ -55,8 +58,9 @@ const PROXY = 'http://localhost:8000/';
 * ベタの場合は`WP`と`PHP`を`false`にします。
 * PHPを使用したいがWordpressが入らない場合は`WP`を`false`、`PHP`を`true`にします。
 
-## How To Use(使用方法)
 ___
+
+## How To Use
 
 以下コマンドを入力することでサーバーの立ち上げ、コンパイル、ウォッチ、画像圧縮が走り、開発を開始できます。
 
@@ -74,17 +78,20 @@ npm run build-php // PHPを使用する場合
 npm run build-wp // WPを使用する場合
 ```
 
-## PHP
 ___
+
+## PHP
 
 初期状態（クローン時）でWPの雛形に使えるファイル群を用意しています。(ex. archive-blog.php,single-blog.phpなど)  
 
 またディレクトリについては以下のようになっています。
+
 - @functions --- WPのfunctions.phpに読み込ませるための設定を分割管理している
 - @includes --- 共通ファイル群
 - @Utilitys --- 各ファイルで使用する便利な関数やクラス群
 
 ### @Utilitysについて
+
 このディレクトリには特に使用頻度の多い機能が存在しています。  
 
 <details>
@@ -124,9 +131,9 @@ Picture($file_path, $file_name, $ext, $alt, $class, $media)
 
 その他使用例は`template.php`ファイルに記載してあります。
 
+___
 
 ## Style
-___
 
 ### ■Tailwind
 
@@ -146,6 +153,7 @@ classを追加したい場合は`tailwind.config.js`ファイル内の`theme->ex
 ### ■Sass
 
 Sassの基本設計は以下
+
 - foundations --- resetやbaseなど基本の設定
 - frame --- 単体の機能を持つコンポーネントのスタイル (ex.hamburger,accordionなど)
 - layouts --- レイアウト単位のスタイル
@@ -153,11 +161,12 @@ Sassの基本設計は以下
 - objects --- オブジェクト単位のスタイル
 - pages --- ページ特有のスタイル
 
-
-## TypeScript
 ___
 
+## TypeScript
+
 ファイル構成は以下
+
 - @Types --- 型定義ファイル
 - @utilitys --- 各ファイルで使用する便利な関数やクラス群
 - Modules --- 単体の機能を持つモジュール群(ex. Accordion,Modalなど)
@@ -298,6 +307,8 @@ ___
 
 </div>
 </details>
+
+___
 
 
 
