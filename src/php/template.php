@@ -57,6 +57,36 @@ get_header();
         <?php endwhile;?>
       <?php endif; ?>
     </section>
+
+    <section>
+      <h2>Taxonomy archive</h2>
+      <?php
+        $terms = get_query_var('term');
+        $paged = get_query_var('paged') ? get_query_var('paged') : 1;
+        $taxonomyQuery = new WP_Query(array(
+          'post_type' => 'post',
+          'posts_per_page' => -1,
+          'paged' => $paged,
+          'tax_query' => array(
+            'relation' => 'OR',
+            array(
+              'taxonomy' => 'taxonomy',
+              'field' => 'slug',
+              'terms' => array($terms, 'all'),
+            ),
+          ),
+        ));
+      ?>
+      <?php if( $taxonomyQuery->have_posts() ) : ?>
+        <?php while( $taxonomyQuery->have_posts() ) : $taxonomyQuery->the_post(); ?>
+          <?php
+            $terms = get_the_terms( $post->ID, 'taxonomy');
+            $terms = current($terms);
+          ?>
+          <?php // contents ?>
+        <?php endwhile;?>
+      <?php endif; ?>
+    </section>
   </div>
 </main>
 
