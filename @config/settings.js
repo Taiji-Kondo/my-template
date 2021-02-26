@@ -2,7 +2,8 @@ const WP_THEME_NAME = 'my_template'; // テーマ名
 const WP = true; // wpかベタか(true && use wp)
 const PHP = true; // phpかベタか(true && use php)
 const WP_PATH = WP ? `wp/app/public/wp-content/themes/${WP_THEME_NAME}/` : 'public/'; // コンパイル後のファイルが吐き出されるフォルダ
-const PROXY = 'http://localhost:8000/';
+const LOCAL_HOST_PORT = 8000;
+const PROXY = `http://localhost:${LOCAL_HOST_PORT}/`;
 
 // Webpackの設定
 const WebpackSettings = {
@@ -52,6 +53,7 @@ const settings = {
   WP_PATH: WP_PATH,
   WP: WP,
   PHP: PHP,
+  LOCAL_HOST_PORT: LOCAL_HOST_PORT,
   PROXY: PROXY,
   webpack: WebpackSettings,
   ImageminSettings: ImageminSettings,

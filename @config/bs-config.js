@@ -16,6 +16,7 @@ const BROWSER_SYNC = {
     forms: false,
   },
   proxy: Settings.PROXY,
+  port: Settings.LOCAL_HOST_PORT,
 };
 
 module.exports = BROWSER_SYNC;
