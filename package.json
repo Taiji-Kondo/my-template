@@ -1,6 +1,9 @@
 {
   "name": "my_template",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=14.8.0"
+  },
   "scripts": {
     "gulp-ejs": "gulp ejs",
     "gulp-watch": "gulp watch",
