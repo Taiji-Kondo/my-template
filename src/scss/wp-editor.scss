@@ -1,0 +1,66 @@
+.mce-content-body,
+.mce-content-body.wp-editor,
+.wp-editor {
+  @apply leading-normal tracking-normal;
+  @apply text-14;
+  a {
+    @apply inline underline;
+    &:hover {
+      @apply no-underline;
+    }
+  }
+  h1,h2,h3,h4,h5,h6,strong {
+    @apply font-bold;
+  }
+  h1 {
+    @apply text-30;
+  }
+  h2 {
+    @apply text-26;
+  }
+  h3 {
+    @apply text-22;
+  }
+  h4 {
+    @apply text-20;
+  }
+  h5 {
+    @apply text-18;
+  }
+  h6 {
+    @apply text-16;
+  }
+  em {
+    @apply italic;
+  }
+  ul,ol {
+    @apply pl-8;
+  }
+  ol {
+    @apply pl-5 list-decimal;
+  }
+  ul {
+    @apply pl-5 list-disc;
+  }
+  p {
+    @apply leading-loose;
+  }
+  img {
+    @apply inline w-auto;
+  }
+  blockquote {
+    @apply block;
+    padding: 1em 40px;
+  }
+  hr {
+    @apply border-solid border;
+  }
+  .aligncenter {
+    margin: 0 auto;
+    text-align: center;
+  }
+  .alignright {
+    margin-left: auto;
+    text-align: center;
+  }
+}
