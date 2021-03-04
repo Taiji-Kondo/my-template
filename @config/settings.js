@@ -13,6 +13,7 @@ const WebpackSettings = {
     [WP_PATH + 'assets/js/ie']: './src/ts/ie',
     [WP_PATH + 'assets/css/style']: './src/scss/style',
     [WP_PATH + 'assets/css/tailwind']: './src/scss/tailwind',
+    [WP_PATH + 'assets/css/wp-editor']: './src/scss/wp-editor',
   },
   vendors: {
     vendor: {

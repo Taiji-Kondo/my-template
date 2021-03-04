@@ -2,6 +2,7 @@
 const ignore_files = [
   "../wp/**",
   "../public/**",
+  "../src/scss/wp-editor.scss",
 ];
 
 module.exports = {
