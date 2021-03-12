@@ -55,7 +55,7 @@ get_header();
     </ol>
   </section>
 
-  <section id="contents1" class="mt-20">
+  <section id="contents1" class="mt-20" data-fade-trigger>
     <h2 class="text-24 font-bold">Tab</h2>
     <ol class="flex" role="tablist" data-fade-item>
       <li class="rounded bg-green" role="tab">
@@ -79,7 +79,7 @@ get_header();
     </div>
   </section>
 
-  <section id="contents2" class="mt-20">
+  <section id="contents2" class="mt-20" data-multiple-trigger>
     <h2 class="text-24 font-bold">Accordion</h2>
     <ol class="" data-accordion-wrapper>
       <li class="w-full mt-4" data-multiple-item>

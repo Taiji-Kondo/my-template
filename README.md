@@ -32,17 +32,52 @@ npm scriptの使い分けにより立ち上がるサーバーとコンパイル�
 
 ___
 
-## Initial Settings
-まずはこのリポジトリをクローンしてください。  
-その後ターミナルにて
+## Initial Settings(初期設定)
 
-```
-npm ci
+- クローン
+- .env（環境変数）ファイルの設定
+- configファイルの設定
+- Node packageのインストール
+- Dockerの立ち上げ
+
+### クローン
+
+まずはこのリポジトリをクローンしてください。
+
+### .env（環境変数）ファイルの設定
+
+次に環境変数の設定をします。
+
+ルート直下に`.env.example`ファイルが存在します。  
+このファイルは`.env`ファイルのplaceholderの役割をします。  
+*※`.env`ファイルにはAPIや環境パスなどの重要な情報が含まれる可能性があるため`.gitignore`により、Gitに上がらないようにします*
+
+そこで、`.env.example`をコピーし、`.env`という名前で同じ階層にペーストします。
+
+ファイルの中身は以下のようになっています。
+
+```shell
+WP_CONTAINER_NAME=#他のコンテナ名とかぶらない任意の名前
+DB_CONTAINER_NAME=#他のコンテナ名とかぶらない任意の名前
+
+WORDPRESS_DB_HOST=#mysql:3306 （デフォルト）
+WORDPRESS_DB_NAME=#任意の名前
+WORDPRESS_DB_USER=#任意の名前
+WORDPRESS_DB_PASSWORD=#任意の値
+
+MYSQL_ROOT_PASSWORD=#任意の値
+MYSQL_DATABASE=#WORDPRESS_DB_NAMEと同じ値
+MYSQL_USER=#WORDPRESS_DB_USERと同じ値
+MYSQL_PASSWORD=#WORDPRESS_DB_PASSWORDと同じ値
+
+LOCAL_HOST_PORT=#任意のポート番号　（./@config/setting.js　内のLOCAL_HOST_PORTと合わせる）
+MYSQL_PORT=#任意のポート番号 （他に使用している番号とかぶらないようにする）
 ```
 
-コマンドを入力します。<br>
-上記コマンドにより`package-lock.json`をもとに依存関係を解決しながら`node_modules`がインストールされます。  
-  
+コメントアウトを参考に設定してください。
+
+### configファイルの設定
+
 次に`@config/settings.js`ファイルにて使用する技術の選定をします。
 
 ```
@@ -50,13 +85,62 @@ const WP_THEME_NAME = 'my_template'; // テーマ名
 const WP = true; // wpかベタか(true && use wp)
 const PHP = true; // phpかベタか(true && use php)
 const WP_PATH = WP ? `wp/app/public/wp-content/themes/${WP_THEME_NAME}/` : 'public/'; // コンパイル後のファイルが吐き出されるフォルダ
-const PROXY = 'http://localhost:8000/';
 ```
 
-上記のコードに任意の設定をします。  
+上記のコードに任意の設定をします。
 * WordPressを使用する際は`WP`と`PHP`を`true`にします。
 * ベタの場合は`WP`と`PHP`を`false`にします。
 * PHPを使用したいがWordpressが入らない場合は`WP`を`false`、`PHP`を`true`にします。
+
+### Node packageのインストール
+
+続いて、Node Packageをインストールします。
+
+ターミナルにて
+
+```
+npm ci
+```
+
+コマンドを入力します。  
+上記コマンドにより`package-lock.json`をもとに依存関係を解決しながら`node_modules`がインストールされます。
+
+### Dockerの立ち上げ
+
+ローカルで確認しながら作業するためにDockerを立ち上げます。
+
+ターミナルにて以下コマンドを順に入力します。
+
+```shell
+# dockerの立ち上げ
+docker-compose up -d --build
+
+# Dockerコンテナに入る
+docker exec -it wp-container /bin/bash
+
+# .shファイルの実行に管理者権限を与える
+chmod +x /tmp/wp-initial.sh
+
+# .shファイルの実行
+/tmp/wp-initial.sh
+```
+
+このコマンドの実行により、Dockerを立ち上げ`initial.sh`ファイルを参照し、Wordpressの初期設定を自動で行います。
+
+また、2回め以降の立ち上げは
+```shell
+docker-compose up -d
+```
+
+のみで可能で、.shファイルの実行も不要です。
+
+Dockerの終了は以下コマンドです。
+
+```shell
+docekr-compose down
+```
+
+*※終了しなければバックグラウンドで起動し続けます*
 
 ___
 
