@@ -9,4 +9,5 @@
   <link rel="stylesheet" href="<?php echo add_parameter('/assets/css/tailwind.css') ?>">
   <link rel="stylesheet" href="<?php echo add_parameter('/assets/css/style.css') ?>">
   <link rel="stylesheet" href="<?php echo add_parameter('/assets/css/wp-editor.css') ?>">
+  <?php wp_head(); ?>
 </head>
