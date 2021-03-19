@@ -150,11 +150,15 @@ class Picture {
    */
   private function getAspect(array $file_name): array
   {
+    $FILES = $this->getFiles($this->OPTIONS['file_path']);
+    $picture_name_sp = $this->OPTIONS['file_name'] . '_sp.' . $this->OPTIONS['ext'];
+    $has_sp = $this->hasFile($FILES, $picture_name_sp);
+
     $PICTURE_SERVER_PATH_PC = $this->get_picture_server_path($file_name['FILE_NAME_PC']) . '.' . $this->OPTIONS['ext'];
     $PICTURE_SERVER_PATH_SP = $this->get_picture_server_path($file_name['FILE_NAME_SP']) . '.' . $this->OPTIONS['ext'];
     return [
       'PC_ASPECT' => $this->createAspect($PICTURE_SERVER_PATH_PC),
-      'SP_ASPECT' => $this->createAspect($PICTURE_SERVER_PATH_SP),
+      'SP_ASPECT' => $has_sp ? $this->createAspect($PICTURE_SERVER_PATH_SP) : 0,
     ];
   }
 
