@@ -18,7 +18,7 @@ new Modal();
 
 // ScrollTo class
 import { ScrollTo } from './Modules/ScrollTo';
-new ScrollTo().scroll();
+new ScrollTo({}, true);
 
 
 // Animation class

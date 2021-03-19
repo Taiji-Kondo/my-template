@@ -4,11 +4,9 @@
 // https://greensock.com/docs/v3/Plugins/ScrollToPlugin
 // https://greensock.com/cheatsheet/
 
-//TODO
-//途中から出す処理をわける
-
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+import { ThrowAttribute } from "../@utilitys/_ThrowAttribute";
 gsap.registerPlugin(ScrollToPlugin);
 
 type scrollToOption = Partial<Readonly<{
@@ -22,17 +20,17 @@ export class ScrollTo {
   duration: number;
   header: number;
   offset: number;
-  constructor(options?: scrollToOption) {
+  constructor(options?: scrollToOption, isScrollFade: boolean = false) {
     this.scrollBtn = document.querySelectorAll<HTMLElement>('[data-scroll]');
     this.duration = options?.duration ?? 1;
     this.header = options?.header ?? 0;
     this.offset = options?.offset ?? 0;
+    this.scroll(isScrollFade);
   }
 
   // 途中から出す
   private scrollFade = (target: HTMLElement): void => {
-    target.style.opacity = '0';
-    target.style.transition = 'opacity .3s, transform .3s';
+    ThrowAttribute.style(target, ['opacity', 'pointerEvents', 'transition'], ['0', 'none', 'opacity .3s, transform .3s']);
     const ignitionPoint = window.innerHeight / 3;
     const bodyHeight = document.body.clientHeight;
     const endPoint = bodyHeight - 100;
@@ -40,14 +38,14 @@ export class ScrollTo {
 
     window.addEventListener('scroll', () => {
       if (window.pageYOffset <= ignitionPoint || scrollEnd >= endPoint) {
-        target.style.opacity = '0';
+        ThrowAttribute.style(target, ['opacity', 'pointerEvents'], ['0', 'none']);
       } else {
-        target.style.opacity = '1';
+        ThrowAttribute.style(target, ['opacity', 'pointerEvents'], ['1', 'auto']);
       }
     });
   };
 
-  public scroll = (): void => {
+  public scroll = (isScrollFade: boolean): void => {
     this.scrollBtn.forEach((btn: HTMLElement) => {
       // Error handling
       if (!btn.hasAttribute('href')) throw new Error('[data-scroll]にhref属性を設定してください。');
@@ -55,7 +53,8 @@ export class ScrollTo {
       const targetName = btn.getAttribute('href');
 
       if (btn.getAttribute('href') == '#') {
-        this.scrollFade(btn);
+        // 途中から出る処理を行うかどうか
+        isScrollFade && this.scrollFade(btn);
         btn.addEventListener('click', (e: Event) => {
           e.preventDefault();
           gsap.to(window, {
