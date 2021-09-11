@@ -4,7 +4,7 @@ services:
   wordpress:
     build: ./
     ports:
-      - ${BASE_URL}:80
+      - 127.0.0.1:${WP_PORT}:80
     volumes:
       - ./wp/app/public:/var/www/html
       - ./wp-initial.sh:/tmp/wp-initial.sh
@@ -21,7 +21,7 @@ services:
   mysql:
     image: mysql:5.7
     ports:
-      - ${MYSQL_PORT}:${MYSQL_PORT}
+      - ${MYSQL_PORT}:3306
     volumes:
       - db_mysql:/var/lib/mysql
     environment:
