@@ -7,11 +7,13 @@
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 import { ThrowAttribute } from "../@utilitys/_ThrowAttribute";
+import { ClientHeightHeader } from "../@utilitys/_ClientHeightHeader";
+
 gsap.registerPlugin(ScrollToPlugin);
 
 type scrollToOption = Partial<Readonly<{
   duration: number;
-  header: number;
+  header: boolean;
   offset: number;
 }>>
 
@@ -23,14 +25,14 @@ export class ScrollTo {
   constructor(options?: scrollToOption, isScrollFade: boolean = false) {
     this.scrollBtn = document.querySelectorAll<HTMLElement>('[data-scroll]');
     this.duration = options?.duration ?? 1;
-    this.header = options?.header ?? 0;
+    this.header = options?.header ? ClientHeightHeader.getHeaderHeight() : 0;
     this.offset = options?.offset ?? 0;
     this.scroll(isScrollFade);
   }
 
   // 途中から出す
   private scrollFade = (target: HTMLElement): void => {
-    ThrowAttribute.style(target, ['opacity', 'pointerEvents', 'transition'], ['0', 'none', 'opacity .3s, transform .3s']);
+    ThrowAttribute.style(target, ['opacity', 'pointerEvents'], ['0', 'none']);
     const ignitionPoint = window.innerHeight / 3;
     const bodyHeight = document.body.clientHeight;
     const endPoint = bodyHeight - 100;
@@ -72,7 +74,7 @@ export class ScrollTo {
             duration: this.duration,
             scrollTo: {
               y: `${targetName}`,
-              offsetY: this.offset,
+              offsetY: this.header,
             },
             ease: 'power2.inOut',
           });
