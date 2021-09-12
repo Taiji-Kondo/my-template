@@ -47,9 +47,3 @@ wp theme delete twentynineteen --allow-root
 wp option update permalink_structure /%post_id%/ --allow-root
 
 echo -- finished --
-
-# localhost立ち上げ
-#curl http://localhost:8000
-
-#コンテナを起動し続ける
-tail -f /dev/null

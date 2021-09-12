@@ -1,9 +1,10 @@
+require('dotenv').config()
 const WP_THEME_NAME = 'my_template'; // テーマ名
 const WP = true; // wpかベタか(true && use wp)
 const PHP = true; // phpかベタか(true && use php)
 const WP_PATH = WP ? `wp/app/public/wp-content/themes/${WP_THEME_NAME}/` : 'public/'; // コンパイル後のファイルが吐き出されるフォルダ
-const LOCAL_HOST_PORT = 8000;
-const PROXY = `http://localhost:${LOCAL_HOST_PORT}/`;
+const LOCAL_HOST_PORT = process.env.WP_PORT;
+const PROXY = `http://localhost:${process.env.WP_PORT}/`;
 
 // Webpackの設定
 const WebpackSettings = {
