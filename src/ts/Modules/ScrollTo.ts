@@ -6,23 +6,25 @@
 
 import { gsap } from 'gsap';
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-import { ThrowAttribute } from "../@utilitys/_ThrowAttribute";
-import { ClientHeightHeader } from "../@utilitys/_ClientHeightHeader";
+import { ThrowAttribute } from '../@utilitys/_ThrowAttribute';
+import { ClientHeightHeader } from '../@utilitys/_ClientHeightHeader';
 
 gsap.registerPlugin(ScrollToPlugin);
 
-type scrollToOption = Partial<Readonly<{
-  duration: number;
-  header: boolean;
-  offset: number;
-}>>
+type scrollToOption = Partial<
+  Readonly<{
+    duration: number;
+    header: boolean;
+    offset: number;
+  }>
+>;
 
 export class ScrollTo {
   scrollBtn: NodeListOf<HTMLElement>; // 取得するdata属性（固定）
   duration: number;
   header: number;
   offset: number;
-  constructor(options?: scrollToOption, isScrollFade: boolean = false) {
+  constructor(options?: scrollToOption, isScrollFade = false) {
     this.scrollBtn = document.querySelectorAll<HTMLElement>('[data-scroll]');
     this.duration = options?.duration ?? 1;
     this.header = options?.header ? ClientHeightHeader.getHeaderHeight() : 0;

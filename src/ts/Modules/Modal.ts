@@ -4,7 +4,7 @@
 
 import { ThrowAttribute } from '../@utilitys/_ThrowAttribute';
 import { BodyFix } from '../@utilitys/_BodyFix';
-import { GetParameter } from "../@utilitys/_GetParameter";
+import { GetParameter } from '../@utilitys/_GetParameter';
 
 // Youtube data type
 type youtubeData = {
@@ -38,7 +38,7 @@ export class Modal {
 
     const currentNumber = index + 1;
     parameter === currentNumber && this.handleModal(content, true);
-  }
+  };
 
   // YouTubeを含むか判断するメソッド
   private readonly hasYoutube = (element: HTMLElement): boolean => {
@@ -58,7 +58,6 @@ export class Modal {
       this.youtubeData.element?.setAttribute('src', `${this.youtubeData.src}`);
     }, this.speed);
   };
-
 
   // Open or Close modal
   private handleModal = (content: HTMLElement, toOpen: boolean) => {
@@ -81,7 +80,7 @@ export class Modal {
     if (this.hasYoutube(content)) {
       toOpen ? this.setYouTube(content) : this.removeYouTube();
     }
-  }
+  };
 
   // main thread
   private modal = (): void => {
