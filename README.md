@@ -57,21 +57,15 @@ ___
 ファイルの中身は以下のようになっています。
 
 ```shell
-WP_CONTAINER_NAME=#他のコンテナ名とかぶらない任意の名前
-DB_CONTAINER_NAME=#他のコンテナ名とかぶらない任意の名前
-
-WORDPRESS_DB_HOST=#mysql:3306 （デフォルト）
-WORDPRESS_DB_NAME=#任意の名前
-WORDPRESS_DB_USER=#任意の名前
-WORDPRESS_DB_PASSWORD=#任意の値
-
+MYSQL_HOST=mysql:3306
 MYSQL_ROOT_PASSWORD=#任意の値
 MYSQL_DATABASE=#WORDPRESS_DB_NAMEと同じ値
 MYSQL_USER=#WORDPRESS_DB_USERと同じ値
 MYSQL_PASSWORD=#WORDPRESS_DB_PASSWORDと同じ値
 
-LOCAL_HOST_PORT=#任意のポート番号　（./@config/setting.js　内のLOCAL_HOST_PORTと合わせる）
-MYSQL_PORT=#任意のポート番号 （他に使用している番号とかぶらないようにする）
+BASE_URL=http://localhost:3000/
+WP_PORT=8000
+MYSQL_PORT=3306
 ```
 
 コメントアウトを参考に設定してください。
@@ -112,14 +106,11 @@ npm ci
 ターミナルにて以下コマンドを順に入力します。
 
 ```shell
-# dockerの立ち上げ
+# dockerの立ち上げ(初回)
 docker-compose up -d --build
 
 # Dockerコンテナに入る
-docker exec -it wp-container /bin/bash
-
-# .shファイルの実行に管理者権限を与える
-chmod +x /tmp/wp-initial.sh
+docker-compose exec wordpress bash
 
 # .shファイルの実行
 /tmp/wp-initial.sh
@@ -127,7 +118,7 @@ chmod +x /tmp/wp-initial.sh
 
 このコマンドの実行により、Dockerを立ち上げ`initial.sh`ファイルを参照し、Wordpressの初期設定を自動で行います。
 
-また、2回め以降の立ち上げは
+また、2回目以降の立ち上げは
 ```shell
 docker-compose up -d
 ```
@@ -171,9 +162,9 @@ ___
 
 またディレクトリについては以下のようになっています。
 
-- @functions --- WPのfunctions.phpに読み込ませるための設定を分割管理している
-- @includes --- 共通ファイル群
-- @Utilitys --- 各ファイルで使用する便利な関数やクラス群
+- @functions: WPのfunctions.phpに読み込ませるための設定を分割管理している
+- @includes: 共通ファイル群
+- @Utilitys: 各ファイルで使用する便利な関数やクラス群
 
 ### @Utilitysについて
 
