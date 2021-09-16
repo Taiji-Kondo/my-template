@@ -4,7 +4,7 @@ LABEL title="WP-CLI"\
   version="1.0"\
   description="Install WP-CLI"
 
-COPY wp-initial.sh /wp-initial.sh
+COPY ../../wp-initial.sh /wp-initial.sh
 
 # WP-CLIのインストール
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \

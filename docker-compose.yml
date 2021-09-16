@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   wordpress:
-    build: ./
+    build:
+      context: .
+      dockerfile: .docker/wordpress/Dockerfile
     ports:
       - 127.0.0.1:${WP_PORT}:80
     volumes:
